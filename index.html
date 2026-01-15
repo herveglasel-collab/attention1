@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Prototype Attention - Classe (30s)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Background video (optional) -->
+    <video id="bgVideo" autoplay muted playsinline loop preload="auto">
+      <source src="media/classroom.mp4" type="video/mp4">
+    </video>
+
+    <!-- Dark overlay to keep UI readable -->
+    <div id="shade"></div>
+
+    <!-- Distractor overlay (student turns around) -->
+    <img id="distractorImg" src="media/student_turn.png" alt="distracteur" />
+
+    <!-- Top HUD -->
+    <div id="hud">
+      <div id="status">Prêt</div>
+      <div id="timer">00.0s</div>
+    </div>
+
+    <!-- Teacher cue bubble -->
+    <div id="cueBubble" aria-live="polite">
+      <div id="cueLabel">Appuie sur + quand j'ai dit PLUS, et sur − quand j'ai dit MOINS.</div>
+      <div id="cueSub">Touchez l'écran pour démarrer.</div>
+    </div>
+
+    <!-- Response buttons -->
+    <div id="buttons">
+      <button id="btnMinus" class="resp">−</button>
+      <button id="btnPlus" class="resp">+</button>
+    </div>
+
+    <!-- Bottom controls -->
+    <div id="controls">
+      <button id="startBtn">Démarrer (30s)</button>
+      <button id="downloadBtn" disabled>Télécharger CSV</button>
+      <button id="resetBtn" disabled>Réinitialiser</button>
+    </div>
+
+    <!-- Debug panel (optional) -->
+    <pre id="debug" aria-hidden="true"></pre>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
