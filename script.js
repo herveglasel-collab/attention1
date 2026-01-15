@@ -406,20 +406,31 @@ function resetAll() {
 }
 
 function bindUI() {
-  els.btnPlus.addEventListener("click", () => handleResponse("+"));
-  els.btnMinus.addEventListener("click", () => handleResponse("-"));
-
-  els.startBtn.addEventListener("click", startRun);
-  els.downloadBtn.addEventListener("click", exportCSV);
-  els.resetBtn.addEventListener("click", resetAll);
-
-  // Tap anywhere to start (useful on tablet)
-  document.body.addEventListener("click", (e) => {
-    // avoid double-trigger if clicking buttons
-    if (e.target === els.startBtn || e.target === els.downloadBtn || e.target === els.resetBtn) return;
+  // Si on appuie sur + / − alors que le test n'a pas démarré, on démarre d'abord.
+  els.btnPlus.addEventListener("click", () => {
+    if (!state.running) { startRun(); return; }
+    handleResponse("+");
   });
 
-  // If video missing, avoid ugly error—video tag will just show black background.
+  els.btnMinus.addEventListener("click", () => {
+    if (!state.running) { startRun(); return; }
+    handleResponse("-");
+  });
+
+  // Boutons bas (si visibles)
+  if (els.startBtn) els.startBtn.addEventListener("click", startRun);
+  if (els.downloadBtn) els.downloadBtn.addEventListener("click", exportCSV);
+  if (els.resetBtn) els.resetBtn.addEventListener("click", resetAll);
+
+  // Tap/clic n'importe où pour démarrer
+  document.addEventListener("pointerdown", (e) => {
+    // Ne pas démarrer si on clique sur un bouton de contrôle
+    if (e.target === els.downloadBtn || e.target === els.resetBtn) return;
+
+    if (!state.running) {
+      startRun();
+    }
+  }, { passive: true });
 }
 
 (function main() {
@@ -427,3 +438,4 @@ function bindUI() {
   bindUI();
   resetAll();
 })();
+
